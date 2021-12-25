@@ -16,13 +16,18 @@ const main = async () => {
     // This will create a local Ethereum network for this contract. Once the script completes it also destorys the local network.
     // Every time you run the contract, it will be a fresh blockchain. Basically like a local server refreshing everytime to start from clean slate
     // which makes it easy to debug errors
-    const waveContract = await waveContractFactory.deploy();
+    const waveContract = await waveContractFactory.deploy({
+        value: hre.ethers.utils.parseEther('0.1'), // Fund the contract with 0.1ETH at the begining.
+    });
     // This waits until the contract is officially deployed to the local blockahin. Constructor of contract gets executed when we actually deploy.
     await waveContract.deployed();
     // Prints the address of the deployed contract. Helps to find the contract on the blockchain. 
     console.log('Contract has been deployed to : ', waveContract.address);
-    // Pritns the address of the entity who is deploying the contract.
+    // Prints the address of the entity who is deploying the contract.
     console.log('Contract deployed by: ', owner.address);
+    // Prints the balance of the contract.
+    let balance = await hre.ethers.provider.getBalance(waveContract.address);
+    console.log('Contract balance : ', hre.ethers.utils.formatEther(balance));
 
     //Test the sample function exposed like a Public API endpoint by the contract
     let waveCount;
@@ -41,6 +46,9 @@ const main = async () => {
 
     let allWaves = await waveContract.getAllWaves();
     console.log(allWaves);
+    // After waving once the balance should reduce
+    balance = await hre.ethers.provider.getBalance(waveContract.address);
+    console.log('Contract balance : ', hre.ethers.utils.formatEther(balance));
 };
 
 const runMain = async() => {

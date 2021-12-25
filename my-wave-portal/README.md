@@ -81,9 +81,14 @@ Because in order to perform a transaction like even deploying the contract, we n
 
 [Without Waves](https://rinkeby.etherscan.io/address/0x6b9D2F9622eb26E6b0b05be5d09954110c2a2431)
 [With all the Waves information](https://rinkeby.etherscan.io/address/0x318d5F0772Bd820a7d3958C76C2017D27AFF6031)
+[With initial Eth to prize the waver](https://rinkeby.etherscan.io/address/0xe5fE35812531b9b278E76739760Da73CECbF50Af)
 
 
 ## Steps to perform when making changes to Contract
 - Deploy the contract again `npx hardhat run scripts/deploy.js --network rinkeby`
 - Update the contract address on the frontend
 - Update the Abi file in the frontend
+
+
+#### Error: non-payable constructor cannot override value
+This means that our contract isn't allowed to pay people. The fix is to add a keyword `payable` to our constructor.

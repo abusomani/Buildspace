@@ -18,7 +18,7 @@ contract WavePortal {
     // Array of waves. Holds all the waves anyone ever sent to us.
     Wave[] waves;
 
-    constructor(){
+    constructor() payable {
         console.log("Wave Portal smart contract");
     }
 
@@ -31,6 +31,14 @@ contract WavePortal {
         // current block timestamp in seconds
         waves.push(Wave(msg.sender, _msg, block.timestamp));
         emit NewWave(msg.sender, block.timestamp, _msg);
+
+        // Send prize amount to whoever waves at you.
+        uint256 prizeAmount = 0.0001 ether;
+        // address(this).balance lets retrieve the balance of the contract itself.
+        require(prizeAmount <= address(this).balance, "Trying to withdraw more money than the contract has");
+        // Send the value to the sender
+        (bool success, ) = (msg.sender).call{value: prizeAmount}("");
+        require(success, "Failed to withdraw money from contract");
     }
 
     function getAllWaves() public view returns (Wave[] memory) {
