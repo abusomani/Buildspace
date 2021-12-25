@@ -1,5 +1,7 @@
 # Basic Sample Hardhat Project
 
+#### Project hosted on: https://somani-wave-portal.vercel.app/
+
 This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
 
 To get hardhat do the following:
@@ -39,3 +41,41 @@ npx hardhat help
 - When you run `npx hardhat node` it spins up a local server that is a local Ethereum network. This is required to work on client side and test things out without having to run script repeatedly.
 
 - For deploying the contract on the local network. Run `npx hardhat run scripts/deploy.js --network localhost`. Make sure that the node server is up and running with the `npx hardhat node` command.
+
+### Alchemy
+
+Alchemy essentially helps us broadcast our contract creation transaction so that it can be picked up by miners as quickly as possible. Once the transaction is mined, it is then broadcasted to the blockchain as a legit transaction. From there, everyone updates their copy of the blockchain.
+
+I will deploy the app to Ethereum Rinkeby Testnet for playing around and not the mainnet as it costs real money. I will test the application in a real-world scenario and do the following:
+- Broadcast my transaction
+- Wait for it to be picked up by the actual miners
+- Wait for it to be mined
+- Wait for it to be broadcasted back to the blockchain to signal all the other miners to update their copies.
+
+### Fake $
+
+To get fake money on the `Rinkeby` testnet we can choose any of the faucet. Metamask wallet should be set to "Rinkeby Test Network" for the faucet to work.
+
+
+| Name             | Link                                  | Amount          | Time         |
+| ---------------- | ------------------------------------- | --------------- | ------------ |
+| MyCrypto         | https://app.mycrypto.com/faucet       | 0.01            | None         |
+| Buildspace       | https://buildspace-faucet.vercel.app/ | 0.025           | 1d           |
+| Ethily           | https://ethily.io/rinkeby-faucet/     | 0.2             | 1w           |
+| Official Rinkeby | https://faucet.rinkeby.io/            | 3 / 7.5 / 18.75 | 8h / 1d / 3d |
+
+
+## Keep in Mind
+
+We will place the Alchemy Api url in the `.env` file and place it in `.gitignore`. This is really important because it has our private key. 
+**The private key is the same as your mainnet private key.**
+
+- For Api Url from copy it from the created app from Alchemy
+- For the private key, copy it from Metamask by changing the network to `Rinkeby Test Network`. Clicking on `Account Details` > `Export Private Key`
+
+### Why do I need to use private key?
+Because in order to perform a transaction like even deploying the contract, we need to "login" on the blockchain. Username would be our public address and password would be the private key.
+
+
+## Deployed contract 
+https://rinkeby.etherscan.io/address/0x6b9D2F9622eb26E6b0b05be5d09954110c2a2431
