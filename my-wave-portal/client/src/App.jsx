@@ -3,7 +3,7 @@ import ReactLoading from "react-loading";
 import { ethers } from "ethers";
 import Contract from "./contract/WavePortal.json";
 import "./App.css";
-import { CONTRACT_ADDRESS } from './constants/constants';
+import { CONTRACT_ADDRESS } from "./constants/constants";
 
 const App = () => {
   const [shouldLoad, setShouldLoad] = useState(false);
@@ -19,7 +19,7 @@ const App = () => {
       // Make sure that we have access to window.ethereum
       const { ethereum } = window;
       if (!ethereum) {
-        alert("Make sure you have a wallet connected like Metamask!");
+        console.log("Make sure you have a wallet connected like Metamask!");
         return;
       }
 
@@ -59,7 +59,7 @@ const App = () => {
       // Make sure that we have access to window.ethereum
       const { ethereum } = window;
       if (!ethereum) {
-        alert("Make sure you have a wallet connected like Metamask!");
+        console.log("Make sure you have a wallet connected like Metamask!");
         return;
       }
 
@@ -83,25 +83,29 @@ const App = () => {
       await waveTxn.wait();
       console.log("Mined -- ", waveTxn.hash);
       setLoading(false);
-      setMessage('');
+      setMessage("");
     } catch (error) {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    getAllWaves();
+  }, []);
 
   const checkIfWalletIsConnected = async () => {
     try {
       // Make sure that we have access to window.ethereum
       const { ethereum } = window;
       if (!ethereum) {
-        alert("Make sure you have a wallet connected like Metamask!");
+        console.log("Make sure you have a wallet connected like Metamask!");
         return;
       }
 
       //Checks if we're authorized to access the user's wallet.
       const accounts = await ethereum.request({ method: "eth_accounts" });
       if (accounts.length === 0) {
-        alert("No authorized account found");
+        console.log("No authorized account found");
       }
       // User can have multiple accounts in the wallet. We simply grab the first one.
       setCurrentAccount(accounts[0]);
@@ -117,7 +121,7 @@ const App = () => {
       // Make sure that we have access to window.ethereum
       const { ethereum } = window;
       if (!ethereum) {
-        alert("Make sure you have a wallet connected like Metamask!");
+        console.log("Make sure you have a wallet connected like Metamask!");
         return;
       }
 
@@ -126,6 +130,7 @@ const App = () => {
       });
       console.log("Connected", accounts[0]);
       setCurrentAccount(accounts[0]);
+      getAllWaves();
     } catch (error) {
       console.error(error);
     }
@@ -134,8 +139,7 @@ const App = () => {
   // Runs the function when the page loads.
   useEffect(() => {
     checkIfWalletIsConnected();
-    getAllWaves();
-  });
+  }, []);
 
   if (!shouldLoad) return <></>;
   return (
@@ -145,54 +149,56 @@ const App = () => {
         wallet and wave at me!
       </h1>
 
-      {!currentAccount && (
-        <button className="connectButton" onClick={connectWallet}>
+      {!currentAccount ? (
+        <button className="connect-button" onClick={connectWallet}>
           Connect Wallet
         </button>
-      )}
-
-      {loading ? (
-        <ReactLoading type={"bars"} className="loader" />
       ) : (
-        <form onSubmit={wave} className="wave-form">
-          <textarea
-            required
-            placeholder="Enter any message that you want me to read when you wave at me!"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            className="wave-message-input"
-            contentEditable
-          />
-          <input
-            type={"submit"}
-            value={"👋 Wave at Me"}
-            className="wave-button"
-          />
-        </form>
-      )}
+        <>
+          {loading ? (
+            <ReactLoading type={"bars"} className="loader" />
+          ) : (
+            <form onSubmit={wave} className="wave-form">
+              <textarea
+                required
+                placeholder="Enter any message that you want me to read when you wave at me!"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                className="wave-message-input"
+                contentEditable
+              />
+              <input
+                type={"submit"}
+                value={"👋 Wave at Me"}
+                className="wave-button"
+              />
+            </form>
+          )}
 
-      {waves && (
-        <div className="waves">
-          <div className="wave-title">All My Waves</div>
-          {waves.map((wave, index) => {
-            return (
-              <div key={index} className="wave-container">
-                <div>
-                  <b>From Address: </b>
-                  {wave.address}
-                </div>
-                <div>
-                  <b>Waved At: </b>
-                  {wave.timestamp.toString()}
-                </div>
-                <div>
-                  <b>Wave Message: </b>
-                  {wave.message}
-                </div>
-              </div>
-            );
-          })}
-        </div>
+          {waves && (
+            <div className="waves">
+              <div className="wave-title">All My Waves</div>
+              {waves.map((wave, index) => {
+                return (
+                  <div key={index} className="wave-container">
+                    <div>
+                      <b>From Address: </b>
+                      {wave.address}
+                    </div>
+                    <div>
+                      <b>Waved At: </b>
+                      {wave.timestamp.toString()}
+                    </div>
+                    <div>
+                      <b>Wave Message: </b>
+                      {wave.message}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </>
       )}
     </div>
   );
