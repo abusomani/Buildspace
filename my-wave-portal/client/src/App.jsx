@@ -76,22 +76,25 @@ const App = () => {
 
       setLoading(true);
 
+      const getGasEstiamte = await wavePortalContract.estimateGas.wave(message);
       // Actual wave from your smart contract
-      const waveTxn = await wavePortalContract.wave(message, { gasLimit: 300000 });
+      const waveTxn = await wavePortalContract.wave(message, { gasLimit: getGasEstiamte });
       console.log("Mining....", waveTxn.hash);
 
       await waveTxn.wait();
       console.log("Mined -- ", waveTxn.hash);
       setLoading(false);
       setMessage("");
+      getAllWaves();
     } catch (error) {
       console.error(error);
     }
   };
 
+
   useEffect(() => {
     getAllWaves();
-  }, []);
+  }, [getAllWaves]);
 
   const checkIfWalletIsConnected = async () => {
     try {
@@ -165,7 +168,6 @@ const App = () => {
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 className="wave-message-input"
-                contentEditable
               />
               <input
                 type={"submit"}
