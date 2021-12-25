@@ -1,46 +1,73 @@
 .mainContainer {
   display: flex;
-  justify-content: center;
-  width: 100%;
-  margin-top: 64px;
-}
-
-.dataContainer {
-  display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  width: 100%;
 }
 
 .bio {
   text-align: center;
   color: white;
   font-size: 2rem;
-  position: absolute;
-  top: 10%;
   background: -webkit-linear-gradient(rgb(35, 206, 192), rgb(219, 161, 239));
   border: 1;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.waveButton {
-  position: absolute;
-  top: 50%;
+.wave-form {
+  text-align: center;
+  padding: 10px;
+  margin: 0 40%;
+  display: flex;
+  flex-direction: column;
+}
+
+.wave-message-input{
+  min-width: 100px;
+  min-height: 100px;
+}
+
+.wave-button {
   cursor: pointer;
-  max-width: max-content;
   padding: 8px;
+  background-color: aqua;
   border: 0;
   border-radius: 5px;
 }
 
-.totalWaves {
-  text-align: center;
-  background: -webkit-linear-gradient(rgb(246, 245, 245), rgb(184, 40, 86));
-  border: 1;
+.waves{
+  margin: 0 5%;
+}
+
+.wave-title{
+  text-align: left;
+  color: white;
   font-size: 2rem;
+  background: -webkit-linear-gradient(rgb(35, 206, 192), rgb(219, 161, 239));
+  border: 1;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  position: absolute;
-  bottom: 10%;
+}
+
+
+.wave-container{
+  display: grid;
+  grid-template-columns: 500px 500px auto;
+}
+
+.wave-container > div{
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px 5px;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  text-align: center;
+  margin: 5px 5px;
+}
+
+.loader{
+  height: 100px;
+  width: 100px;
+  background: -webkit-linear-gradient(rgb(35, 206, 192), rgb(219, 161, 239));
+  margin: 0 auto;
 }

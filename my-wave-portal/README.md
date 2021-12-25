@@ -77,5 +77,13 @@ We will place the Alchemy Api url in the `.env` file and place it in `.gitignore
 Because in order to perform a transaction like even deploying the contract, we need to "login" on the blockchain. Username would be our public address and password would be the private key.
 
 
-## Deployed contract 
-https://rinkeby.etherscan.io/address/0x6b9D2F9622eb26E6b0b05be5d09954110c2a2431
+## Deployed contract
+
+[Without Waves](https://rinkeby.etherscan.io/address/0x6b9D2F9622eb26E6b0b05be5d09954110c2a2431)
+[With all the Waves information](https://rinkeby.etherscan.io/address/0x318d5F0772Bd820a7d3958C76C2017D27AFF6031)
+
+
+## Steps to perform when making changes to Contract
+- Deploy the contract again `npx hardhat run scripts/deploy.js --network rinkeby`
+- Update the contract address on the frontend
+- Update the Abi file in the frontend

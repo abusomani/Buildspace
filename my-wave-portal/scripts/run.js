@@ -28,14 +28,19 @@ const main = async () => {
     let waveCount;
     waveCount = await waveContract.getTotalWaves();
     // Me waving at myself.
-    let waveTxn = await waveContract.wave();
+    let waveTxn = await waveContract.wave('Test message!');
     await waveTxn.wait();
     waveCount = await waveContract.getTotalWaves();
 
     // Random person waving at us simulation. Connect their wallet address and try to wave
-    waveTxn = await waveContract.connect(randomPerson).wave();
+    waveTxn = await waveContract.connect(randomPerson).wave('Another message!');
     await waveTxn.wait();
+    
     waveCount = await waveContract.getTotalWaves();
+    console.log(waveCount);
+
+    let allWaves = await waveContract.getAllWaves();
+    console.log(allWaves);
 };
 
 const runMain = async() => {

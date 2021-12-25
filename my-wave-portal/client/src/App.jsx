@@ -1,16 +1,19 @@
 import React, { useEffect, useState, useCallback } from "react";
+import ReactLoading from "react-loading";
 import { ethers } from "ethers";
 import Contract from "./contract/WavePortal.json";
 import "./App.css";
 
 const App = () => {
   const [shouldLoad, setShouldLoad] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
   const [currentAccount, setCurrentAccount] = useState("");
-  const [numberOfWaves, setNumberOfWaves] = useState("");
-  const contractAddress = "0x6b9D2F9622eb26E6b0b05be5d09954110c2a2431";
+  const [waves, setWaves] = useState([]);
+  const contractAddress = "0x318d5F0772Bd820a7d3958C76C2017D27AFF6031";
   const contractABI = Contract.abi;
 
-  const getWaves = useCallback(async () => {
+  const getAllWaves = useCallback(async () => {
     try {
       // Make sure that we have access to window.ethereum
       const { ethereum } = window;
@@ -30,14 +33,27 @@ const App = () => {
         signer
       );
 
-      let count = await wavePortalContract.getTotalWaves();
-      setNumberOfWaves(count.toString());
-    } catch(error) {
+      const w = await wavePortalContract.getAllWaves();
+
+      // Only pick the information that is required to be shown in the UI
+
+      let wvs = [];
+      w.forEach((element) => {
+        wvs.push({
+          address: element.waver,
+          timestamp: new Date(element.timestamp * 1000),
+          message: element.message,
+        });
+      });
+
+      setWaves(wvs);
+    } catch (error) {
       console.error(error);
     }
   }, [contractABI]);
 
-  const wave = async () => {
+  const wave = async (event) => {
+    event.preventDefault();
     try {
       // Make sure that we have access to window.ethereum
       const { ethereum } = window;
@@ -57,15 +73,16 @@ const App = () => {
         signer
       );
 
+      setLoading(true);
+
       // Actual wave from your smart contract
-      const waveTxn = await wavePortalContract.wave();
+      const waveTxn = await wavePortalContract.wave(message);
       console.log("Mining....", waveTxn.hash);
 
       await waveTxn.wait();
       console.log("Mined -- ", waveTxn.hash);
-
-      let count = await wavePortalContract.getTotalWaves();
-      setNumberOfWaves(count.toString());
+      setLoading(false);
+      setMessage('');
     } catch (error) {
       console.error(error);
     }
@@ -116,29 +133,66 @@ const App = () => {
   // Runs the function when the page loads.
   useEffect(() => {
     checkIfWalletIsConnected();
-    getWaves();
-  }, [getWaves]);
+    getAllWaves();
+  });
 
   if (!shouldLoad) return <></>;
   return (
     <div className="mainContainer">
-      <div className="dataContainer">
-        <h1 className="bio">
-          I am Somani working on this super cool project! 
-          Connect your Ethereum wallet and wave at me!
-        </h1>
+      <h1 className="bio">
+        I am Somani working on this super cool project! Connect your Ethereum
+        wallet and wave at me!
+      </h1>
 
-        <button className="waveButton" onClick={wave}>
-        👋 Wave at Me
-        </button>
-
-        {numberOfWaves && <div className="totalWaves">Total number of waves made to me are : {numberOfWaves}</div>}
-        {!currentAccount && (
-        <button className="waveButton" onClick={connectWallet}>
+      {!currentAccount && (
+        <button className="connectButton" onClick={connectWallet}>
           Connect Wallet
         </button>
       )}
-      </div>
+
+      {loading ? (
+        <ReactLoading type={"bars"} className="loader" />
+      ) : (
+        <form onSubmit={wave} className="wave-form">
+          <textarea
+            required
+            placeholder="Enter any message that you want me to read when you wave at me!"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            className="wave-message-input"
+            contentEditable
+          />
+          <input
+            type={"submit"}
+            value={"👋 Wave at Me"}
+            className="wave-button"
+          />
+        </form>
+      )}
+
+      {waves && (
+        <div className="waves">
+          <div className="wave-title">All My Waves</div>
+          {waves.map((wave, index) => {
+            return (
+              <div key={index} className="wave-container">
+                <div>
+                  <b>From Address: </b>
+                  {wave.address}
+                </div>
+                <div>
+                  <b>Waved At: </b>
+                  {wave.timestamp.toString()}
+                </div>
+                <div>
+                  <b>Wave Message: </b>
+                  {wave.message}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };
