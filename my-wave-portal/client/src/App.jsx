@@ -10,7 +10,7 @@ const App = () => {
   const [message, setMessage] = useState("");
   const [currentAccount, setCurrentAccount] = useState("");
   const [waves, setWaves] = useState([]);
-  const contractAddress = "0xe5fE35812531b9b278E76739760Da73CECbF50Af";
+  const contractAddress = "0xC0d4E4AaEF35621fdAfE32521F30cf637eDCEd8E";
   const contractABI = Contract.abi;
 
   const getAllWaves = useCallback(async () => {

@@ -82,6 +82,7 @@ Because in order to perform a transaction like even deploying the contract, we n
 [Without Waves](https://rinkeby.etherscan.io/address/0x6b9D2F9622eb26E6b0b05be5d09954110c2a2431)
 [With all the Waves information](https://rinkeby.etherscan.io/address/0x318d5F0772Bd820a7d3958C76C2017D27AFF6031)
 [With initial Eth to prize the waver](https://rinkeby.etherscan.io/address/0xe5fE35812531b9b278E76739760Da73CECbF50Af)
+[With cooldown mechanism](https://rinkeby.etherscan.io/address/0xC0d4E4AaEF35621fdAfE32521F30cf637eDCEd8E)
 
 
 ## Steps to perform when making changes to Contract
