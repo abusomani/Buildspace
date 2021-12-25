@@ -3,6 +3,7 @@ import ReactLoading from "react-loading";
 import { ethers } from "ethers";
 import Contract from "./contract/WavePortal.json";
 import "./App.css";
+import { CONTRACT_ADDRESS } from './constants/constants';
 
 const App = () => {
   const [shouldLoad, setShouldLoad] = useState(false);
@@ -10,7 +11,7 @@ const App = () => {
   const [message, setMessage] = useState("");
   const [currentAccount, setCurrentAccount] = useState("");
   const [waves, setWaves] = useState([]);
-  const contractAddress = "0xC0d4E4AaEF35621fdAfE32521F30cf637eDCEd8E";
+  const contractAddress = CONTRACT_ADDRESS;
   const contractABI = Contract.abi;
 
   const getAllWaves = useCallback(async () => {

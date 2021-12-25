@@ -42,6 +42,15 @@ npx hardhat help
 
 - For deploying the contract on the local network. Run `npx hardhat run scripts/deploy.js --network localhost`. Make sure that the node server is up and running with the `npx hardhat node` command.
 
+
+### Local development
+- Create a `.env` file with the following variables
+```
+API_URL=<ALCHEMY_API_URL>
+RINKEBY_ACCOUNT_KEY=<METAMASK_PRIVATE_KEY>
+```
+
+
 ### Alchemy
 
 Alchemy essentially helps us broadcast our contract creation transaction so that it can be picked up by miners as quickly as possible. Once the transaction is mined, it is then broadcasted to the blockchain as a legit transaction. From there, everyone updates their copy of the blockchain.
