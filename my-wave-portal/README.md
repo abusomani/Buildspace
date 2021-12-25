@@ -93,3 +93,8 @@ Because in order to perform a transaction like even deploying the contract, we n
 
 #### Error: non-payable constructor cannot override value
 This means that our contract isn't allowed to pay people. The fix is to add a keyword `payable` to our constructor.
+
+### Validating the transaction
+When our contract has been deployed, its confusing to determine whether our wallet's account was successfully rewarded the prize because it might have used some amount of gas and potentially been rewarded.
+To validate, we should open our contract address on [Rinkeby Etherscan](https://rinkeby.etherscan.io/) and view the transactions that have taken place. Take a look at the Wave transaction and see if there was a prize transaferred to the `To` address.
+**Notice** The `Value` of the transaction is still `0 ETH` because the user never paid anything to initiate the wave. The transfer of ETH internally from a smart contract is called an `Internal transaction`.
