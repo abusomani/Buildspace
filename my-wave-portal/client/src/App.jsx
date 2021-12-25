@@ -51,7 +51,7 @@ const App = () => {
     } catch (error) {
       console.error(error);
     }
-  }, [contractABI]);
+  }, [contractABI, contractAddress]);
 
   const wave = async (event) => {
     event.preventDefault();
