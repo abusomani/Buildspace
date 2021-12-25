@@ -31,7 +31,7 @@ contract WavePortal {
 
     function wave(string memory _msg) public {
         // Assert that the sender is not bombarding the contract. Cooldown for avoiding spam-waving.
-        require(lastWavedAt[msg.sender] + 15 minutes < block.timestamp, "Wait for 15 minutes before waving again");
+        require(lastWavedAt[msg.sender] + 30 seconds < block.timestamp, "Wait for 30 seconds before waving again");
 
         // Update the current timestamp for the sender of the wave.
         lastWavedAt[msg.sender] = block.timestamp;

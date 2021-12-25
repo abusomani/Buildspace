@@ -77,7 +77,7 @@ const App = () => {
       setLoading(true);
 
       // Actual wave from your smart contract
-      const waveTxn = await wavePortalContract.wave(message);
+      const waveTxn = await wavePortalContract.wave(message, { gasLimit: 300000 });
       console.log("Mining....", waveTxn.hash);
 
       await waveTxn.wait();
