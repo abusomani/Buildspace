@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { ethers } from "ethers";
 import Contract from "./contract/WavePortal.json";
 import "./App.css";
@@ -10,7 +10,7 @@ const App = () => {
   const contractAddress = "0x6b9D2F9622eb26E6b0b05be5d09954110c2a2431";
   const contractABI = Contract.abi;
 
-  const getWaves = async () => {
+  const getWaves = useCallback(async () => {
     try {
       // Make sure that we have access to window.ethereum
       const { ethereum } = window;
@@ -35,7 +35,8 @@ const App = () => {
     } catch(error) {
       console.error(error);
     }
-  }
+  }, [contractABI]);
+
   const wave = async () => {
     try {
       // Make sure that we have access to window.ethereum

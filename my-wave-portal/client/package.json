@@ -14,10 +14,9 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && npm run copy-abi",
+    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "copy-abi": "cp ../artifacts/contracts/WavePortal.sol/WavePortal.json ./src/contract/"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
