@@ -9,26 +9,38 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  max-width: 600px;
-}
-
-.header {
-  text-align: center;
-  font-size: 32px;
-  font-weight: 600;
+  align-items: center;
 }
 
 .bio {
   text-align: center;
-  color: gray;
-  margin-top: 16px;
+  color: white;
+  font-size: 2rem;
+  position: absolute;
+  top: 10%;
+  background: -webkit-linear-gradient(rgb(35, 206, 192), rgb(219, 161, 239));
+  border: 1;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .waveButton {
+  position: absolute;
+  top: 50%;
   cursor: pointer;
-  margin-top: 16px;
+  max-width: max-content;
   padding: 8px;
   border: 0;
   border-radius: 5px;
-  
+}
+
+.totalWaves {
+  text-align: center;
+  background: -webkit-linear-gradient(rgb(246, 245, 245), rgb(184, 40, 86));
+  border: 1;
+  font-size: 2rem;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: absolute;
+  bottom: 10%;
 }
